@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Schema(description = "DTO для задачи")
 public class TaskDto {
 
-    @Schema(description = "Идентификатор задачи", example = "1")
+    @Schema(description = "Идентификатор задачи", example = "1",accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     @Schema(description = "Название задачи", example = "Реализовать новую фичу")
