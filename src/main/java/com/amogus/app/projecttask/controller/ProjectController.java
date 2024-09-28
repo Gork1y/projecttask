@@ -1,6 +1,7 @@
 package com.amogus.app.projecttask.controller;
 
 import com.amogus.app.projecttask.api.ProjectApi;
+import com.amogus.app.projecttask.dto.ProjectDto;
 import com.amogus.app.projecttask.entity.Project;
 import com.amogus.app.projecttask.service.ProjectService;
 import java.util.List;
@@ -15,8 +16,8 @@ public class ProjectController implements ProjectApi {
     private final ProjectService projectService;
 
     @Override
-    public ResponseEntity<Project> createProject(Project project) {
-        return ResponseEntity.ok(projectService.createProject(project));
+    public ResponseEntity<ProjectDto> createProject(ProjectDto projectDto) {
+        return ResponseEntity.ok(projectService.createProject(projectDto));
     }
 
     @Override
@@ -25,15 +26,15 @@ public class ProjectController implements ProjectApi {
     }
 
     @Override
-    public ResponseEntity<Project> getProjectById(Long id) {
+    public ResponseEntity<ProjectDto> getProjectById(Long id) {
         return projectService.getProjectById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @Override
-    public ResponseEntity<Project> updateProject(Long id, Project project) {
-        return ResponseEntity.ok(projectService.updateProject(id, project));
+    public ResponseEntity<ProjectDto> updateProject(Long id, ProjectDto projectDto) {
+        return ResponseEntity.ok(projectService.updateProject(id, projectDto));
     }
 
     @Override

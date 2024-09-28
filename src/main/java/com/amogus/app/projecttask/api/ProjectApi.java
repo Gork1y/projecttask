@@ -1,5 +1,6 @@
 package com.amogus.app.projecttask.api;
 
+import com.amogus.app.projecttask.dto.ProjectDto;
 import com.amogus.app.projecttask.entity.Project;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,16 +21,16 @@ public interface ProjectApi {
     @Operation(summary = "Создание нового проекта", description = "Создает новый проект на основе переданных данных")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешное создание проекта",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Project.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDto.class))),
             @ApiResponse(responseCode = "400", description = "Некорректные данные", content = @Content)
     })
     @PostMapping
-    ResponseEntity<Project> createProject(@RequestBody Project project);
+    ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto);
 
     @Operation(summary = "Получение списка всех проектов", description = "Возвращает список всех проектов")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешное получение списка проектов",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Project.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDto.class))),
             @ApiResponse(responseCode = "404", description = "Проекты не найдены", content = @Content)
     })
     @GetMapping
@@ -38,20 +39,20 @@ public interface ProjectApi {
     @Operation(summary = "Получение проекта по ID", description = "Возвращает проект по его ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Проект найден",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Project.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDto.class))),
             @ApiResponse(responseCode = "404", description = "Проект не найден", content = @Content)
     })
     @GetMapping("/{id}")
-    ResponseEntity<Project> getProjectById(@PathVariable Long id);
+    ResponseEntity<ProjectDto> getProjectById(@PathVariable Long id);
 
     @Operation(summary = "Обновление проекта", description = "Обновляет существующий проект по его ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Проект успешно обновлен",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Project.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDto.class))),
             @ApiResponse(responseCode = "404", description = "Проект не найден", content = @Content)
     })
     @PutMapping("/{id}")
-    ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project project);
+    ResponseEntity<ProjectDto> updateProject(@PathVariable Long id, @RequestBody ProjectDto projectDto);
 
     @Operation(summary = "Удаление проекта", description = "Удаляет проект по его ID")
     @ApiResponses(value = {

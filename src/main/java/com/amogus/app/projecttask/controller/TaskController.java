@@ -1,6 +1,8 @@
 package com.amogus.app.projecttask.controller;
 
 import com.amogus.app.projecttask.api.TaskApi;
+import com.amogus.app.projecttask.dto.PaginatedTasksDto;
+import com.amogus.app.projecttask.dto.TaskDto;
 import com.amogus.app.projecttask.entity.Task;
 import com.amogus.app.projecttask.service.TaskService;
 import java.util.List;
@@ -15,8 +17,8 @@ public class TaskController implements TaskApi {
     private final TaskService taskService;
 
     @Override
-    public ResponseEntity<Task> createTask(Task task) {
-        return ResponseEntity.ok(taskService.createTask(task));
+    public ResponseEntity<TaskDto> createTask(TaskDto taskDto) {
+        return ResponseEntity.ok(taskService.createTask(taskDto));
     }
 
     @Override
@@ -25,20 +27,21 @@ public class TaskController implements TaskApi {
     }
 
     @Override
-    public ResponseEntity<List<Task>> getTasksByProjectId(Long projectId) {
-        return ResponseEntity.ok(taskService.getTasksByProjectId(projectId));
+    public ResponseEntity<PaginatedTasksDto> getTasksByProjectId(Long projectId, int page, int size) {
+        PaginatedTasksDto paginatedTasks = taskService.getTasksByProjectId(projectId, page, size);
+        return ResponseEntity.ok(paginatedTasks);
     }
 
     @Override
-    public ResponseEntity<Task> getTaskById(Long id) {
+    public ResponseEntity<TaskDto> getTaskById(Long id) {
         return taskService.getTaskById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @Override
-    public ResponseEntity<Task> updateTask(Long id, Task task) {
-        return ResponseEntity.ok(taskService.updateTask(id, task));
+    public ResponseEntity<TaskDto> updateTask(Long id, TaskDto taskDto) {
+        return ResponseEntity.ok(taskService.updateTask(id, taskDto));
     }
 
     @Override
