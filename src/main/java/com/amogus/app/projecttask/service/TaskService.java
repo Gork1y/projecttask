@@ -1,52 +1,22 @@
 package com.amogus.app.projecttask.service;
 
+import com.amogus.app.projecttask.dto.PaginatedTasksDto;
+import com.amogus.app.projecttask.dto.TaskDto;
 import com.amogus.app.projecttask.entity.Task;
-import com.amogus.app.projecttask.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class TaskService {
+public interface TaskService {
 
-    @Autowired
-    private TaskRepository taskRepository;
+    TaskDto createTask(TaskDto taskDto);
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
-    }
+    List<Task> getAllTasks();
 
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
-    }
+    PaginatedTasksDto getTasksByProjectId(Long projectId, int page, int size);
 
-    public List<Task> getTasksByProjectId(Long projectId) {
-        return taskRepository.findByProjectId(projectId);
-    }
+    Optional<TaskDto> getTaskById(Long id);
 
-    public Optional<Task> getTaskById(Long id) {
-        return taskRepository.findById(id);
-    }
+    TaskDto updateTask(Long id, TaskDto taskDto);
 
-    public Task updateTask(Long id, Task updatedTask) {
-        Optional<Task> taskOptional = taskRepository.findById(id);
-        if (taskOptional.isPresent()) {
-            Task existingTask = taskOptional.get();
-            existingTask.setName(updatedTask.getName());
-            existingTask.setDescription(updatedTask.getDescription());
-            existingTask.setStatus(updatedTask.getStatus());
-            existingTask.setPriority(updatedTask.getPriority());
-            existingTask.setEndDate(updatedTask.getEndDate());
-            existingTask.setUpdatedDate(updatedTask.getUpdatedDate());
-            return taskRepository.save(existingTask);
-        } else {
-            throw new RuntimeException("Task not found with ID: " + id);
-        }
-    }
-
-    public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
-    }
+    void deleteTask(Long id);
 }

@@ -2,10 +2,12 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: Project Task service
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/projecttaskdb}
+    username: ${SPRING_DATASOURCE_USERNAME:amogus}
+    password: ${SPRING_DATASOURCE_PASSWORD:amogus}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -46,3 +48,7 @@ management:
     web:
       exposure:
         include: health, info
+
+application:
+  title: Streamline Progress
+  version: 1.0
